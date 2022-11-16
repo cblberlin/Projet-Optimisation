@@ -1,10 +1,10 @@
-function [Gfx, Gcx] = Gradient(x, func, m, func_con, h)
-
+function [Gfx, Gcx] = Gradient(x, h, probleme)
+%{
 Gfx = zeros(size(x));
 
 Gcx = zeros(length(x),m);
-tmp_x = func(x);
-tmp_cx = func_con(x);
+tmp_x = fx;
+tmp_cx = cx;
 
 for i = 1:length(x)
     tmp = x;
@@ -18,5 +18,20 @@ for i = 1:length(x)
         Gcx(i,j) = (cx_tmp(j) - tmp_cx(j)) / h(i);
     end
 end
+%}
 
+[fx, cx] = probleme(x);
+
+[fx_h, cx_h] = probleme(x + h);
+
+n = length(x);
+m = length(cx);
+
+Gfx = zeros(n, 1);
+Gcx = zeros(m, n);
+
+for i = 1:length(x)
+    Gfx(i) = (fx_h - fx) / h(i);
+    Gcx(:,i) = (cx_h - cx) / h(i);
+end
 end
