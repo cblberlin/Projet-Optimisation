@@ -18,6 +18,7 @@ if derivee_direction < 0
 
 while s > 1e-6
     xsd = x + s*d_QP;
+    xsd = projection_bornes(xsd, borne_inf, borne_sup);
     [fx_xsd, cx_xsd] = probleme(xsd);
     F_xsd = merite(f_xsd, c_xsd, rho);
     if F_xsd < F_x + c1*s*derivee_direction

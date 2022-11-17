@@ -1,9 +1,9 @@
 function smart_print(X)
-% afficher le vecteur ou la matrice directement
+% afficher le vecteur ou la matrice par appel de la fonction
 
 [~, m] = size(X);
 
-F = [repmat(' %5.2f',1 , m), '\n'];
+F = [repmat(' %7.3f',1 , m), '\n'];
 
 fprintf(F, X.');
 

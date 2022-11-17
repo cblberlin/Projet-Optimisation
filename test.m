@@ -1,63 +1,26 @@
+% Test 1: calculer le gradient par différence finies
+fprintf("Test pour le gradient\n");
+x_init = [-1; 2];
+h = repmat(1e-8, size(x_init));
+[Gfx, Jcx] = Gradient(x_init, h, @func_simple);
+fprintf("Gfx = \n");
+smart_print(Gfx);
+fprintf("Jcx = \n");
+smart_print(Jcx);
 %{
-
-% test for logiciel.m
-
-x = [0;0];
-
-h = [0.001; 0.002];
-
-x_1 = x + h;
-
-[Gfx, Gcx] = Gradient(x, @f1, 1, @c1, h);
-
-[Gfx_1, Gcx_1] = Gradient(x_1, @f1, 1, @c1, h);
-
-lambda = ones(1, 1);
-
-% Gradient de Lagragien par rapport à x
-GLx_1 = Gfx_1 + Gcx_1 * lambda;
-
-GLx =  Gfx + Gcx * lambda;
-
-y_k_1 = GLx - GLx_1;
-
-d_k_1 = x - x_1;
-
-% test for Hessian BFGS
-
-HK = Hessien_SRI(eye(length(x)), x, x_1, GLx, GLx_1);
-
-HK_1 = eye(2);
-
-tau = 0.01;
-
-Hk = HK_1 + (y_k_1 * transpose(y_k_1) / (transpose(y_k_1) * d_k_1)) - (HK_1 * d_k_1 * transpose(d_k_1) * HK_1)/(transpose(d_k_1) * HK_1 * d_k_1); 
-
-H_prime = HK + tau * eye(length(x))
-
-H_prime_ = chol(HK)
-
-% test for def_pos
-
-t = [1 0; 0 -2];
-
-
+si le gradient de f est [2*x(1); 2*x(2)] et le gradient de c est [1 1], 
+l'implémentation de gradient par différence finie est correcte
 %}
 
-x_init = [-1; 2; 1; -2; -2];
+% Test 2: calculer le Gradient de Lagrangien
+lambda = ones(1, 1);
+fprintf("\nTest pour le gradient de lagragien\n");
+GLx = Gradient_Lagrangien(Gfx, Jcx, lambda);
+fprintf("Le gradient de lagrangien par rapport à x = \n");
+smart_print(GLx);
 
-[f, c] = MHW4D(x_init);
+% Test 3: Hessien par quasi newton
+x1 = x_init + h;
+H = eye(length(x1));
 
-m = length(c);
-
-lambda_init = ones(1,m);
-
-max_iter = 100;
-
-rho = 0.001;
-
-tau = 0.1;
-
-eps = 0.0001;
-
-[x_etoile, lambda_etoile] = SQP(x_init, lambda_init, max_iter, @MHW4D, rho, eps, tau, "BFGS");
+%H_BFGS = Hessien_BFGS(H, x1, x_init, G)
