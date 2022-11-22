@@ -24,3 +24,27 @@ x1 = x_init + h;
 H = eye(length(x1));
 
 %H_BFGS = Hessien_BFGS(H, x1, x_init, G)
+
+% Test 4: res_quad
+
+
+% Test SQP pour MHW4D
+x_init = [-1;2;1;-2;-2];
+lambda = ones(3,1);
+max_iter = 100;
+rho = 0.1;
+rho_max = 1;
+eps = 0.001;
+tau = 0.001;
+choix = "BFGS";
+bornes = [-2 0;
+           1 3;
+           0 2;
+          -3 0;
+          -3 -1];
+[x_etoile, lambda_etoile] = SQP(x_init, lambda, max_iter, @MHW4D, @Fonc_merite, bornes, rho, rho_max, eps, tau, "BFGS");
+[f_etoile, c] = MHW4D(x_etoile);
+fprintf("x* = \n");
+smart_print(x_etoile);
+fprintf("f* = \n");
+smart_print(f_etoile);

@@ -10,11 +10,11 @@ le système se transforme si Hess_L est définie positive
 
 Input: 
     Grad_x: Le gradient de f(xk) de taille n * 1
-    Grad_c: La matrice jacobienne de c(xk) de taille m * n
-    c: La valeur de c(xk)
-    H: La matrice Hessienne de Lagrangien
+    Grad_c: La matrice jacobienne de c(xk) de taille n * m
+    c: La valeur de c(xk) de taille m * 1
+    H: La matrice Hessienne de Lagrangien de taille n * n
 Output:
-    d_QP: la solution de système
+    d_QP: la solution de système de taille 
     lambda_QP: la solution de système
 %}
 
@@ -22,12 +22,18 @@ A = Grad_c';
 Qinv = inv(H);
 g = Grad_x;
 b = -c;
-
-fprintf("le taille de A: %d * %d\n", size(A));
-fprintf("le taille de Qinv: %d * %d\n", size(Qinv)); 
-fprintf("le taille de g: %d * %d\n", size(g)); 
-fprintf("le taille de b: %d * %d\n", size(b)); 
 %{
+fprintf("le taille de A: %d * %d\n", size(A));
+smart_print(A);
+fprintf("le taille de Qinv: %d * %d\n", size(Qinv));
+smart_print(Qinv);
+fprintf("le taille de A': %d * %d\n", size(A')); 
+smart_print(A');
+fprintf("le taille de g: %d * %d\n", size(g)); 
+smart_print(g);
+fprintf("le taille de b: %d * %d\n", size(b)); 
+smart_print(b);
+
 fprintf("A = \n");
 smart_print(A);
 fprintf("Qinv = \n");
@@ -37,6 +43,7 @@ smart_print(g);
 fprintf("b = \n");
 smart_print(b);
 %}
+%smart_print(A * Qinv * A');
 lambda_QP = -inv(A * Qinv * A') * ((A * Qinv) * g + b);
 
 d_QP = -Qinv * (A' * lambda_QP + g);

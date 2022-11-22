@@ -13,7 +13,7 @@ Input:
 
 Output:
     Gfx: Gradient de f(x): de taille n * 1
-    Jcx: Matrice Jacobienne de c(x): de taille m * n
+    Jcx: Matrice Jacobienne de c(x): de taille n * m
 %}
 
 % pour ne pas avoir des erreurs en dimension
@@ -28,18 +28,16 @@ m = length(cx);
 
 % Initialiser le résultat de Gfx et Gcx
 Gfx = zeros(n, 1);
-Jcx = zeros(m, n);
+Jcx = zeros(n, m);
 e = zeros(n);
+
 for i = 1:n
     % calculer le gradient par différence finie
-    % dfx/dxi = f(x + h(i)) - f(x) / h(i)
-    % dcx/dxi = c(x + h(i)) - c(x) / h(i)
     e(i) = 1;
     [fx_h, cx_h] = probleme(x + h(i)*e);
     Gfx(i) = (fx_h - fx) / h(i);
-    Jcx(:,i) = (cx_h - cx) / h(i);
+    Jcx(i,:) = (cx_h - cx) / h(i);
     e(i) = 0;
 end
-
 
 end

@@ -7,7 +7,7 @@ GLx(i) = Gfx(i) + lambda' * Jfx(:,i)
 
 Input:
     Gfx: le gradient de f(x) de taille n * 1
-    Jcx: La matrice jacobienne de c(x) de taille m * n
+    Jcx: La matrice jacobienne de c(x) de taille n * m
     lambda: multiplicateur lagragien de taille m * 1
 Output:
     GLx: le gradient de lagragien par rapport à x de taille n * 1
@@ -16,14 +16,15 @@ Output:
 n = length(Gfx);
 
 % Initialisation
-GLx = zeros(size(Gfx));
-smart_print(lambda)
-
+GLx = Gfx + Jcx * lambda;
+%smart_print(lambda)
+%{
 for i = 1:n
-    smart_print(Gfx(i));
-    fprintf("\n");
-    smart_print(lambda' * Jcx(:,i));
-    GLx(i) = Gfx(i) + lambda' * Jcx(:,i);
+    %smart_print(Gfx(i));
+    %fprintf("\n");
+    %smart_print(lambda' * Jcx(:,i));
+    GLx(i) = Gfx(i) + Jcx(i,:);
 end
+%}
 
 end
