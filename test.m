@@ -31,11 +31,11 @@ H = eye(length(x1));
 % Test SQP pour MHW4D
 x_init = [-1;2;1;-2;-2];
 lambda = ones(3,1);
-max_iter = 100;
-rho = 0.1;
-rho_max = 1;
-eps = 0.001;
-tau = 0.001;
+max_iter = 1000;
+rho = 0.001;
+rho_max = 0.01;
+eps = 0.0001;
+tau = 0.0001;
 choix = "BFGS";
 bornes = [-2 0;
            1 3;

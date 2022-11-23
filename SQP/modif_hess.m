@@ -3,8 +3,10 @@ function H = modif_hess(H_,tau)
 %   Detailed explanation goes here
 
 n = length(H_);
-
-H = H_ + tau * eye(n);
+H = H_;
+if(min(eig(H)) <= 0)
+    H = H_ + tau * eye(n);
+end
 
 end
 

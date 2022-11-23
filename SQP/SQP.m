@@ -20,7 +20,7 @@ n = length(x);
 % taille des contraintes d'égalités
 m = length(cx);
 % pas d'incrémentation pour la différence finie
-h = repmat(1e-8, n, 1);
+h = repmat(1e-6, n, 1);
 h = h .* x;
 % Initialisation pour la matrice Hessienne
 H = eye(n);
