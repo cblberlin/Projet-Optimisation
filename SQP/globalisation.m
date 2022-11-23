@@ -18,7 +18,7 @@ x_opt = x;
 fx_next = fx; cx_next = cx;
 
 % calcul de la derivee directionnelle
-derivee_direction = Grad_x' + d_QP - rho * norm(cx, 1);
+derivee_direction = Grad_x'*d_QP - rho * norm(cx, 1);
 
 if derivee_direction >= 0
     % si la hessienne est deja reinitialise
@@ -50,7 +50,7 @@ else
         fx_next = fx_xsd; cx_next = cx_xsd;
         return
     else
-        % si la derniere fois qu'on etait icim on avait
+        % si la derniere fois qu'on etait ici, on avait
         if(outcome == 0)
             % maintenant on marque l'echec car s est trop petit
             % si outcome est deja 2, on le laisse ainsi pour augmenter rho

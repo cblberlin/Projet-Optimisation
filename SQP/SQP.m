@@ -21,7 +21,7 @@ n = length(x);
 m = length(cx);
 % pas d'incrémentation pour la différence finie
 h = repmat(1e-6, n, 1);
-h = h .* x;
+%h = h .* x;
 % Initialisation pour la matrice Hessienne
 H = eye(n);
 % Bornes inf et sup
@@ -34,7 +34,8 @@ outcome = 0;
 nb_iter = nb_iter + 1;
 % calcul gradient par différence finie
 [Grad_x, Grad_c] = Gradient(x, h, probleme);
-% calcul du lagrangien
+
+% calcul gradient du lagrangien
 Grad_L = Gradient_Lagrangien(Grad_x, Grad_c, lambda);
 
 % condition d'arret
@@ -66,9 +67,14 @@ while ~arret
 
     % Globalisation pour ameliorer la descente
     [x, fx, cx, outcome] = globalisation(x, probleme, merite, fx, cx, Grad_x, d_QP, rho, borne_inf, borne_sup, outcome);
-
+    fprintf("x_%i = \n", nb_iter);
+    smart_print(x);
+    fprintf("f(x_%i) = \n", nb_iter);
+    smart_print(fx);
+    
     if(outcome == 1)
         H = eye(n);
+        fprintf("hessien initialisés\n");
         outcome = 2;
         arret = (nb_iter >= max_iter);
         continue
@@ -76,6 +82,7 @@ while ~arret
 
     if ((outcome == 2) && rho/2 <= rho_max)
         rho = 2 * rho;
+        fprintf("\n\nOn augmente rho\n\n");
         arret = (nb_iter >= max_iter);
         continue;
     end
@@ -85,7 +92,7 @@ while ~arret
         Grad_L = Gradient_Lagrangien(Grad_x, Grad_c, lambda_QP);
     end
 
-    arret = (nb_iter >= max_iter) | (norm(Grad_L) < eps) | (norm(x - x_avant) < eps) | (abs(fx - fx_avant) < eps);
+    arret = (nb_iter >= max_iter) | (norm(Grad_L) < eps);
 end
 
 x_etoile = x;

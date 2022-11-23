@@ -22,28 +22,7 @@ A = Grad_c';
 Qinv = inv(H);
 g = Grad_x;
 b = -c;
-%{
-fprintf("le taille de A: %d * %d\n", size(A));
-smart_print(A);
-fprintf("le taille de Qinv: %d * %d\n", size(Qinv));
-smart_print(Qinv);
-fprintf("le taille de A': %d * %d\n", size(A')); 
-smart_print(A');
-fprintf("le taille de g: %d * %d\n", size(g)); 
-smart_print(g);
-fprintf("le taille de b: %d * %d\n", size(b)); 
-smart_print(b);
 
-fprintf("A = \n");
-smart_print(A);
-fprintf("Qinv = \n");
-smart_print(Qinv);
-fprintf("g = \n");
-smart_print(g);
-fprintf("b = \n");
-smart_print(b);
-%}
-%smart_print(A * Qinv * A');
 lambda_QP = -inv(A * Qinv * A') * ((A * Qinv) * g + b);
 
 d_QP = -Qinv * (A' * lambda_QP + g);
