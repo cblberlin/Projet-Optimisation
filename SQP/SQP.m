@@ -69,9 +69,13 @@ while ~arret
     [x, fx, cx, outcome] = globalisation(x, probleme, merite, fx, cx, Grad_x, d_QP, rho, borne_inf, borne_sup, outcome);
     fprintf("x_%i = \n", nb_iter);
     smart_print(x);
+    fprintf("lambda = \n");
+    smart_print(lambda_QP);
     fprintf("f(x_%i) = \n", nb_iter);
     smart_print(fx);
-    
+    fprintf("GLx = \n");
+    smart_print(Grad_L);
+
     if(outcome == 1)
         H = eye(n);
         fprintf("hessien initialisés\n");

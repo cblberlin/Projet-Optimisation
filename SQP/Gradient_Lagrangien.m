@@ -13,7 +13,7 @@ Output:
     GLx: le gradient de lagragien par rapport à x de taille n * 1
 %}
 % Déterminer le taille n
-n = length(Gfx);
+% n = length(Gfx);
 
 % Initialisation
 GLx = Gfx + Jcx * lambda;
