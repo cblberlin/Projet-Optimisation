@@ -1,12 +1,16 @@
-function [x_opt, fx_next, cx_next, outcome] = globalisation(x, probleme, merite, fx, cx, Grad_x, d_QP, rho, borne_inf, borne_sup, outcome)
+function [x_opt, fx_next, cx_next, nb_eval, outcome] = globalisation(x, probleme, merite, fx, cx, Grad_x, d_QP, rho, borne_inf, borne_sup, outcome)
 % pas d'Armijo
 s = 1;
 
 % condition de decroissante suffisante
 c1 = 0.1;
 
+% nombre d'évalutaion dans cette fonciton
+nb_eval = 0;
+
 % fonction de merite en le x courant
 F_x = merite(fx, cx, rho);
+nb_eval = nb_eval + 1;
 
 % indicateur sur la reussite de la recherche lineaire d'Armijo
 armijo = false;
@@ -34,6 +38,7 @@ else
         xsd = x + s*d_QP;
         xsd = projection_bornes(xsd, borne_inf, borne_sup);
         [fx_xsd, cx_xsd] = probleme(xsd);
+        nb_eval = nb_eval + 1;
         F_xsd = merite(fx_xsd, cx_xsd, rho);
         if(F_xsd < F_x + c1*s*derivee_direction)
             armijo = true;

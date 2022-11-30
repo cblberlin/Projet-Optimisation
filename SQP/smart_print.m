@@ -3,7 +3,7 @@ function smart_print(X)
 
 [~, m] = size(X);
 
-F = [repmat(' %7.3f',1 , m), '\n'];
+F = [repmat(' %8.4f',1 , m), '\n'];
 
 fprintf(F, X.');
 
