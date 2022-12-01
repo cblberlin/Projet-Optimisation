@@ -1,3 +1,6 @@
+addpath("SQP");
+addpath("Lanceur")
+
 % Test 1: calculer le gradient par différence finies
 fprintf("Test pour le gradient\n");
 x_init = [-1; 2];
@@ -72,20 +75,32 @@ x_etoile_ariane = x_all(:, end);
 f_etoile = fx_all(end);
 fprintf("x* = \n");
 smart_print(x_etoile_ariane);
-fprintf("f* = \n");
+fprintf("f(x*) = \n");
 smart_print(f_etoile);
 
+x_etoile_theorique = [-1.2366; 2.4616; 1.1911; -0.2144; -1.6165];
+f_etoile_theorique = MHW4D(x_etoile_theorique);
+fprintf("x = \n");
+smart_print(x_etoile_theorique);
+fprintf("f(x) = \n");
+smart_print(f_etoile_theorique);
+
 % Test SQP pour Ariane
-x_init_ariane = 10000 * [1; 1; 1];
+x_init_ariane = [25000;10000;5000];
 lambda_ariane = 1;
-bornes_ariane = [0 150000;
-                 0 40000;
-                 0 8000];
+bornes_ariane = [0 200000000;
+                 0 100000000;
+                 0 5000000];
 [x_all_ariane, fx_all_ariane, cx_all_ariane, lambda_all_ariane, Grad_L_norm_all_ariane, nb_iter_ariane, nb_eval_ariane, rho_all_ariane, nb_eval_all_ariane] = SQP(x_init_ariane, lambda_ariane, max_iter, max_eval, @Ariane, @Fonc_merite, bornes_ariane, rho, rho_max, eps, tau, choix);
 x_etoile_ariane = x_all_ariane(:, end);
 f_etoile_ariane = fx_all_ariane(end);
-fprintf("x* = \n");
+fprintf("m* = \n");
 smart_print(x_etoile_ariane);
-fprintf("f* = \n");
+fprintf("M* = \n");
 smart_print(f_etoile_ariane);
-
+x_etoile_ariane_theorique = [145349; 31215; 7933];
+f_etoile_ariane_theorique = Ariane(x_etoile_ariane_theorique);
+fprintf("m = \n");
+smart_print(x_etoile_ariane_theorique);
+fprintf("M = \n");
+smart_print(f_etoile_ariane_theorique);

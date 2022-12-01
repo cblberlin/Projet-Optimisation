@@ -36,7 +36,7 @@ if derivee_direction >= 0
 else
     while(s > 1e-6)
         xsd = x + s*d_QP;
-        xsd = projection_bornes(xsd, borne_inf, borne_sup);
+        %xsd = projection_bornes(xsd, borne_inf, borne_sup);
         [fx_xsd, cx_xsd] = probleme(xsd);
         nb_eval = nb_eval + 1;
         F_xsd = merite(fx_xsd, cx_xsd, rho);
