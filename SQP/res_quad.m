@@ -23,7 +23,7 @@ Qinv = inv(H);
 g = Grad_x;
 b = -c;
 
-lambda_QP = -inv(A * Qinv * A') * ((A * Qinv) * g + b);
+lambda_QP = -inv(A / H * A') * ((A / H) * g + b);
 
 d_QP = -Qinv * (A' * lambda_QP + g);
 

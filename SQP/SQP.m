@@ -52,8 +52,9 @@ Grad_L = Gradient_Lagrangien(Grad_x, Grad_c, lambda);
 % condition d'arret
 % à compléter
 arret = (nb_iter >= max_iter) | (norm(Grad_L) < eps) | (nb_eval >= max_eval);
-
+%sprintf("            nb évalutation | xk | f(xk) | c(xk) | lambda_k | norm(Grad_L)\n", nb_iter);
 while ~arret
+    %sprintf("Iter: %-g   | nb évalutation | xk | f(xk) | c(xk) | lambda_k | norm(Grad_L)\n", nb_iter);
     % Incrément le nombre d'itération
     nb_iter = nb_iter + 1;
 
@@ -71,13 +72,14 @@ while ~arret
         % modification hessienne pour qu'il soit definie positive
         H = modif_hess(H, tau);
 
-        % Resoud le probleme quadratique
-        [d_QP, lambda_QP] = res_quad(Grad_x, Grad_c, cx, H);
+        % Resoud le probleme quadratique 
+        [d_QP, lambda] = res_quad(Grad_x, Grad_c, cx, H);
+        %smart_print(lambda_QP);
         
         % stocker les valeurs d'avant
         x_avant = x;
         fx_avant = fx;
-        Grad_L_avant = Gradient_Lagrangien(Grad_x, Grad_c, lambda_QP);
+        Grad_L_avant = Gradient_Lagrangien(Grad_x, Grad_c, lambda);
     end
     
     fx_all = [fx_all, fx];
@@ -116,12 +118,15 @@ while ~arret
     if (outcome == 0)
         [Grad_x, Grad_c] = Gradient(x, h, probleme);
         nb_eval = nb_eval + n + 1;
-        Grad_L = Gradient_Lagrangien(Grad_x, Grad_c, lambda_QP);
+        Grad_L = Gradient_Lagrangien(Grad_x, Grad_c, lambda);
     end
 
     arret = (nb_iter >= max_iter) | (nb_eval >= max_eval) |(norm(Grad_L) < eps) | (norm(x - x_avant) < eps) | (abs(fx - fx_avant) < eps);
+    %fprintf("Iter: %i | nb évalutation | xk | f(xk) | c(xk) | lambda_k | norm(Grad_L)\n", nb_iter);
+    %Format_output = 
+    
 end
-
+%sprintf("Iter: %-g   | nb évalutation | xk | f(xk) | c(xk) | lambda_k | norm(Grad_L)\n", nb_iter);
 x_all = [x_all, x];
 lambda_all = [lambda_all, lambda];
 rho_all = [rho_all, rho];

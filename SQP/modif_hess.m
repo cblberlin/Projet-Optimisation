@@ -4,7 +4,7 @@ function H = modif_hess(H_,tau)
 
 n = length(H_);
 H = H_;
-if(min(eig(H)) < 0)
+if(min(eig(H)) < 1e-2)
     H = H_ + tau * eye(n);
 end
 
