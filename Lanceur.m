@@ -91,7 +91,7 @@ while 1
         branchement_handle = @(THETA) branchement(THETA, simulation_handle, R_c);
         
         % Appel à SQP
-        [THETA_all, f_THETA_all, c_THETA_all, lambda_THETA_all, grad_L_norm_THETA_all, nb_iter_THETA, nb_eval_THETA] = SQP(THETA_init, lambda_THETA_init, branchement_handle, @merite, 'BFGS', bornes_THETA, 1e3, 1e7, 2, 1e-8, 2^12);
+
         fprintf("Nb d'itérations pb de trajectoire : %d\n", nb_iter_THETA);
         
         % Theta optimale
