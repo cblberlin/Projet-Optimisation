@@ -17,7 +17,6 @@ Output:
 %}
 
 % pour ne pas avoir des erreurs en dimension
-assert(all(size(x) == size(h)));
 
 % calculer la valeur de f(x) et c(x)
 [fx, cx] = probleme(x);

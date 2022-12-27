@@ -1,4 +1,5 @@
-function [x_all, fx_all, cx_all, lambda_all, Grad_L_norm_all, nb_iter, nb_eval, rho_all, nb_eval_all] = SQP(x, lambda, max_iter, max_eval, probleme, merite, bornes, rho, rho_max, eps, tau, choix)
+function [x_all, fx_all, cx_all, lambda_all, Grad_L_norm_all, nb_iter, nb_eval, rho_all, nb_eval_all] = ... 
+SQP(x, lambda, max_iter, max_eval, probleme, merite, bornes, rho, rho_max, eps, tau, choix)
 %{
 Entrées:
 x: point initial de taille n* 1
@@ -50,11 +51,8 @@ nb_eval = nb_eval + 1;
 Grad_L = Gradient_Lagrangien(Grad_x, Grad_c, lambda);
 
 % condition d'arret
-% à compléter
 arret = (nb_iter >= max_iter) | (norm(Grad_L) < eps) | (nb_eval >= max_eval);
-%sprintf("            nb évalutation | xk | f(xk) | c(xk) | lambda_k | norm(Grad_L)\n", nb_iter);
 while ~arret
-    %sprintf("Iter: %-g   | nb évalutation | xk | f(xk) | c(xk) | lambda_k | norm(Grad_L)\n", nb_iter);
     % Incrément le nombre d'itération
     nb_iter = nb_iter + 1;
 
@@ -124,6 +122,8 @@ while ~arret
     arret = (nb_iter >= max_iter) | (nb_eval >= max_eval) |(norm(Grad_L) < eps) | (norm(x - x_avant) < eps) | (abs(fx - fx_avant) < eps);
     %fprintf("Iter: %i | nb évalutation | xk | f(xk) | c(xk) | lambda_k | norm(Grad_L)\n", nb_iter);
     %Format_output = 
+    %fprintf("x = \n");
+    %smart_print(x);
     
 end
 %sprintf("Iter: %-g   | nb évalutation | xk | f(xk) | c(xk) | lambda_k | norm(Grad_L)\n", nb_iter);

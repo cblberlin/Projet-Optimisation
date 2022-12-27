@@ -12,12 +12,13 @@ bornes = [-3 1;
            -1 3;
           -4 1;
           -4 0];
-[x_all, fx_all, cx_all, lambda_all, Grad_L_norm_all, nb_iter, nb_eval, rho_all, nb_eval_all] = SQP(x_init, lambda, max_iter, max_eval, @MHW4D, @Fonc_merite, bornes, rho, rho_max, eps, tau, choix);
+[x_all, fx_all, cx_all, lambda_all, Grad_L_norm_all, nb_iter, nb_eval, rho_all, nb_eval_all] = ...
+SQP(x_init, lambda, max_iter, max_eval, @MHW4D, @Fonc_merite, bornes, rho, rho_max, eps, tau, choix);
 
-x_etoile_ariane = x_all(:, end);
+x_etoile = x_all(:, end);
 f_etoile = fx_all(end);
 fprintf("\nx* = \n");
-smart_print(x_etoile_ariane);
+smart_print(x_etoile);
 fprintf("f(x*) = \n");
 smart_print(f_etoile);
 

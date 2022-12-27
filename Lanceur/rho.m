@@ -1,11 +1,14 @@
 function rho = rho(R_t)
-%%% calcul de la densité de l'atmosphère selon le modèle
-%%% exponentiel
+% calcul de la densite de l'atmoshpere selon le modele exponentiel
 
-    rho_0 = 1.225; % densité au sol (kg/m^3)    
-    H = 7000; % facteur d'échelle (m)
-    R_terre = 6378137; % rayon terrestre 
-    
-    % denisté de l'atmosphère (kg/m^3):
-    rho = rho_0 * exp(-(norm(R_t,2) - R_terre)/H);
+% densite au sol
+rho_0 = 1.225;
+
+% facteur d'echelle
+H = 7000;
+
+% rayon de la terre
+R_terre = 6378137;
+
+rho = rho_0 * exp(-(norm(R_t, 2) - R_terre)/H);
 end

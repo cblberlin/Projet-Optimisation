@@ -27,5 +27,6 @@ lambda_QP = -inv(A / H * A') * ((A / H) * g + b);
 
 d_QP = -Qinv * (A' * lambda_QP + g);
 
+
 end
 
