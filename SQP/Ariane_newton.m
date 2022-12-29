@@ -12,8 +12,6 @@ eps = 1e-10;
 
 x = 3;
 
-hx = fct_h(x_init);
-
 while (nb_iter < max_iter)
     x1 = x - fct_h(x)/h_prime(x);
     if(abs(x - x1) < eps)
