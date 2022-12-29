@@ -100,4 +100,4 @@ fprintf("R_tf'*V_tf = %f\n", R_tf'*V_tf);
 THETA_init = theta_opt;
 
 tracees_simulation_trajectoire(y_1, y_2, y_3, t_1, t_2, t_3, R_terre, H_c, R_c, V_c);
-
+print_result(nb_iter_THETA, nb_eval_THETA_all, THETA_all, f_THETA_all, c_THETA_all, lambda_THETA_all,  Grad_L_norm_THETA_all)
