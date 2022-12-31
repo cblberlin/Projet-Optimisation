@@ -1,5 +1,12 @@
 x_init_ariane = [250000;100000;50000];
 lambda_ariane = 1;
+max_iter = 1000;
+max_eval = 1000;
+rho = 1;
+rho_max = 1e10;
+eps = 0.001;
+tau = 0.001;
+choix = "BFGS";
 bornes_ariane = [140000 200000000;
                  20000 100000000;
                  5000 5000000];
