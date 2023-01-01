@@ -1,10 +1,20 @@
-fct_h = @(x) (2647.2 * log(-6.4619 + 2.931 * x) + ...
-              2922.4 * log(-3.6622 + 1.9828 * x) + ...
-              4344.3 * log(x) - 11527);
+function [x_etoile] = Ariane_newton(k, v_e, V_p, m_u)
+% k: indice constructif
+% v_e: Vitesse d'éjection
+% V_p: Vitesse propulsive
+% m_u: la masse du stellite
 
-h_prime = @(x) ((5569.6 * x) / (x^2 - 4.05166 * x + 4.072) + 4344.3 / x);
+omega = k ./ (1 + k);
 
-max_iter = 100;
+fct_h = @(x) (v_e(1) * log(1/omega(1) * (1 - v_e(3)/v_e(1)*(1 - omega(3)*x))) + ...
+             (v_e(2) * log(1/omega(2) * (1 - v_e(3)/v_e(2)*(1 - omega(3)*x)))) + ...
+              v_e(3) * log(x) - V_p);
+
+h_prime = @(x) (omega(3) * v_e(3) / (1 - (v_e(3) * (1 - omega(3) * x)/v_e(2))) + ... 
+                omega(3) * v_e(3) / (1 - (v_e(3) * (1 - omega(3) * x)/v_e(1))) + ...
+                v_e(3) / x);
+
+max_iter = 10000;
 
 nb_iter = 0;
 
@@ -14,25 +24,30 @@ x = 3;
 
 while (nb_iter < max_iter)
     x1 = x - fct_h(x)/h_prime(x);
-    if(abs(x - x1) < eps)
+    
+    if(abs(x - x1) < eps || nb_iter > max_iter)
         break;
     end
     x = x1;
     nb_iter = nb_iter + 1;
 end
 
-X = [10.0826 * (1 - 1.1039 * (1 - 0.13284 * 2.9376)); 
-    7.5278 * (1 - 1.4865 * (1 - 0.17722 * 3.3281));
-    x];
+x_etoile = x;
 
-J = (1.1101/X(1) - 0.1101) * (1.1532/X(2) - 0.1532) * (1.2154/X(3) - 0.2154);
+x2 = 1/omega(2) * (1 - v_e(3)/v_e(2) * (1 - omega(3) * x_etoile));
 
-M0 = 1700 / J;
+x1 = 1/omega(1) * (1 - v_e(2)/v_e(1) * (1 - omega(2) * x2));
+
+X = [x1; x2; x_etoile];
+
+J = ((1 + k(1))/X(1) - k(1)) * ((1 + k(2))/X(2) - k(2)) * ((1 + k(3))/X(3) - k(3));
+
+M0 = m_u / J;
 
 me_1 = M0 - M0/X(1);
-me_2 = M0 - me_1 * (0.1101 + 1) - (M0 - me_1 * (0.1101 + 1))/X(2);
-me_3 = M0 -  me_1 * (0.1101 + 1) - me_2 * (0.1532 + 1) - ...
-      (M0 -  me_1 * (0.1101 + 1) - me_2 * (0.1532 + 1))/X(3);
+me_2 = M0 - me_1 * (k(1) + 1) - (M0 - me_1 * (k(1) + 1))/X(2);
+me_3 = M0 -  me_1 * (k(1) + 1) - me_2 * (k(2) + 1) - ...
+      (M0 -  me_1 * (k(1) + 1) - me_2 * (k(2) + 1))/X(3);
 
 fprintf("M0 = \n");
 smart_print(M0);
@@ -40,3 +55,5 @@ fprintf("me = \n")
 smart_print(me_1)
 smart_print(me_2)
 smart_print(me_3)
+
+end

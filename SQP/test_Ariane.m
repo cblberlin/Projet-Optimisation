@@ -2,8 +2,8 @@ x_init_ariane = [250000;100000;50000];
 lambda_ariane = 1;
 max_iter = 1000;
 max_eval = 1000;
-rho = 1;
-rho_max = 1e10;
+rho = 1e-3;
+rho_max = 1e6;
 eps = 0.001;
 tau = 0.001;
 choix = "BFGS";
@@ -29,4 +29,4 @@ fprintf("\nm = \n");
 smart_print(x_etoile_ariane_theorique);
 fprintf("M = \n");
 smart_print(f_etoile_ariane_theorique);
-print_result(nb_iter_ariane, nb_eval_all_ariane, x_all_ariane, fx_all_ariane, cx_all_ariane, lambda_all_ariane, Grad_L_norm_all_ariane)
+%print_result(nb_iter_ariane, nb_eval_all_ariane, x_all_ariane, fx_all_ariane, cx_all_ariane, lambda_all_ariane, Grad_L_norm_all_ariane)
